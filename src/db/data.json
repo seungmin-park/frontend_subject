@@ -1,0 +1,53 @@
+{
+    "subjects" : [
+        {
+            "id":1,
+            "course":"교양",
+            "required":"선택",
+            "name":"자기소개서 작성",
+            "credit" : 1,
+            "attend" : 0,
+            "task" : 0,
+            "midterm" : 0,
+            "final" : 0,
+            "total" : 0,
+            "grade": "P"
+        },{
+            "id":2,
+            "course":"교양",
+            "required":"선택",
+            "name":"영어",
+            "credit" : 2,
+            "attend" : 20,
+            "task" : 10,
+            "midterm" : 22,
+            "final" : 13,
+            "total" : 65,
+            "grade": "D+"
+        },{
+            "id":3,
+            "course":"전공",
+            "required":"필수",
+            "name":"서버프로그래밍",
+            "credit" : 3,
+            "attend" : 15,
+            "task" : 18,
+            "midterm" : 25,
+            "final" : 26,
+            "total" : 64,
+            "grade": "B0"
+        },{
+            "id":4,
+            "course":"전공",
+            "required":"선택",
+            "name":"소프트웨어공학",
+            "credit" : 3,
+            "attend" : 20,
+            "task" : 20,
+            "midterm" : 30,
+            "final" : 30,
+            "total" : 100,
+            "grade": "A+"
+        }
+    ]
+}
