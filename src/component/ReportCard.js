@@ -1,11 +1,15 @@
 import { useRef, useState } from 'react';
-import datas from '../db/data.json';
-import aggregate from '../db/aggregate.json';
 import CreateGrade from './CreateGrade';
 
 
 export default function ReportCard(){
-    let subjectList = datas.subjects;
+    let total = 0;
+    let integrationCredit = 0;
+    let integrationAttend = 0;
+    let integrationTask = 0;
+    let integrationMidterm = 0;
+    let integrationFinal = 0;
+    let integrationTotal = 0;
     const nextId = useRef(3);
     const [inputs, setInputs] = useState({
         "course":"",
@@ -20,7 +24,7 @@ export default function ReportCard(){
     });
     const {course,required,name,credit,attend,task,midterm,final} = inputs;
     const [subjectGrades, setSubjectGrades] = useState([{
-        "id" : 1,
+        "id" : 0,
         "course":"교양",
         "required":"선택",
         "name":"교양1",
@@ -31,7 +35,7 @@ export default function ReportCard(){
         "final":0,
         "total":0
     },{
-        "id" : 2,
+        "id" : 1,
         "course":"",
         "required":"",
         "name":"",
@@ -74,7 +78,7 @@ export default function ReportCard(){
             midterm,
             final,
         }
-        setSubjectGrades({...setSubjectGrades, subjectGrade})
+        setSubjectGrades([...subjectGrades, subjectGrade])
         setInputs({
             "course":"",
             "required":"",
@@ -86,6 +90,7 @@ export default function ReportCard(){
             "final":0,
             "total":0
         })
+        nextId.current += 1;
     }
 
     // const [subjects, subjectsFunc] = useState(subjectList);
@@ -96,38 +101,41 @@ export default function ReportCard(){
 
     // }
 
-    // function getGrade(score){
-    //     if(score >= 95){
-    //         return "A+";
-    //     }
-    //     else if(score >= 90){
-    //         return "A0";
-    //     }
-    //     else if(score >= 85){
-    //         return "B+";
-    //     }
-    //     else if(score >= 80){
-    //         return "B0";
-    //     }
-    //     else if(score >= 75){
-    //         return "C+";
-    //     }
-    //     else if(score >= 70){
-    //         return "C0";
-    //     }
-    //     else if(score >= 65){
-    //         return "D+";
-    //     }
-    //     else if(score >= 60){
-    //         return "D0";
-    //     }
-    //     else{
-    //         return "F";
-    //     }
-    // }
-
+    function getGrade(credit,score){
+        if(credit === 1){
+            return "P"
+        }else{
+            if(score >= 95){
+                return "A+";
+            }
+            else if(score >= 90){
+                return "A0";
+            }
+            else if(score >= 85){
+                return "B+";
+            }
+            else if(score >= 80){
+                return "B0";
+            }
+            else if(score >= 75){
+                return "C+";
+            }
+            else if(score >= 70){
+                return "C0";
+            }
+            else if(score >= 65){
+                return "D+";
+            }
+            else if(score >= 60){
+                return "D0";
+            }
+            else{
+                return "F";
+            }
+        }
+    }
     return <>
-    <CreateGrade course={course} required={required} name={name} credit={credit} attend={attend} task={task} midterm={midterm} final={final} onChange={onChange} onCreate={onCreate} />
+    <CreateGrade name={name} attend={attend} task={task} midterm={midterm} final={final} onChange={onChange} onCreate={onCreate} />
     {/* <span>
         <span>1학년</span>
         <button onClick={add}>추가</button>
@@ -153,10 +161,14 @@ export default function ReportCard(){
         </thead>
         <tbody>
         {subjectGrades.map((subject) =>(
-            // total = subject.attend + subject.task + subject.midterm + subject.final,
-            // aggregate.total+= total,
-            // cnt++,
-        <tr>
+            integrationCredit+= parseInt(subject.credit),
+            integrationAttend+= parseInt(subject.attend),
+            integrationTask+= parseInt(subject.task),
+            integrationMidterm+= parseInt(subject.midterm),
+            integrationFinal+= parseInt(subject.final),
+            total = parseInt(subject.attend) + parseInt(subject.task) + parseInt(subject.midterm) + parseInt(subject.final),
+            integrationTotal+= total,
+        <tr key={subject.id}>
             <td>{subject.course}</td>
             <td>{subject.required}</td>
             <td>{subject.name}</td>
@@ -165,9 +177,9 @@ export default function ReportCard(){
             <td>{subject.task === 0 ? "" : subject.task}</td>
             <td>{subject.midterm === 0 ? "" : subject.midterm}</td>
             <td>{subject.final === 0 ? "" : subject.final}</td>
-            {/* <td>{total === 0 ? "" : total}</td>
+            <td>{total === 0 ? "" : total}</td>
             <td></td>
-            <td>{getGrade(total)}</td> */}
+            <td style={getGrade(subject.credit,total) === "F" ? {color : "red"} : {color : "black"}}>{getGrade(subject.credit, total)}</td>
         </tr>
         ))}
         </tbody>
@@ -203,22 +215,20 @@ export default function ReportCard(){
             <td></td>
             <td></td>
         </tr>
+        */}
         <tfoot>
             <tr>
                 <td colSpan={3}>합계</td>
-                <td>{subjects.map((subject) => {
-                    let credit = subject.credit;
-                })}</td>
-                <td>출석</td>
-                <td>과제</td>
-                <td>중간</td>
-                <td>기말</td>
-                <td>{aggregate.total}</td>
-                <td>{aggregate.total/cnt}</td>
-                <td style={getGrade(aggregate.total/cnt) === "F" ? {color : "red"} : {color : "black"}}>{getGrade(aggregate.total/cnt)}</td>
+                <td>{integrationCredit}</td>
+                <td>{integrationAttend}</td>
+                <td>{integrationTask}</td>
+                <td>{integrationMidterm}</td>
+                <td>{integrationFinal}</td>
+                <td>{integrationTotal}</td>
+                <td>{parseInt(integrationTotal/nextId.current)}</td>
+                <td style={getGrade(0,integrationTotal/nextId.current) === "F" ? {color : "red"} : {color : "black"}}>{getGrade(0,integrationTotal/nextId.current)}</td>
             </tr>
         </tfoot>
-         */}
     </table> }
     </>
 }
