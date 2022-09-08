@@ -1,7 +1,9 @@
 import ReportCard from './ReportCard';
 
-export default function Body(){
+function Body(){
     return <>
-        <ReportCard />
+    {Array(3).fill().map((v,i) => <ReportCard year={i + 1}/>)}
     </>
 }
+
+export default Body;

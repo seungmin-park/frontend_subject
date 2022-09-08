@@ -1,36 +1,52 @@
 import React from 'react';
- 
-function CreateGrade({name, attend, task,midterm, final,onChange, onCreate}){
+
+function CreateGrade({name, attend, task,midterm, final,onChange}){
     return (
-        <div>
-                <select name='course' onChange={onChange}>
-                    <option value={""}>교양/전공</option>
+        <tr>
+            <td style={{width:'50px'}}>
+                <select name='course' onChange={onChange} style={{width:'50px'}}>
                     <option value={"교양"}>교양</option>
                     <option value={"전공"}>전공</option>
                 </select>
-                <select name='required' onChange={onChange}>
-                    <option value={""}>선택/필수</option>
+            </td>
+            <td style={{width:'50px'}}>
+                <select name='required' onChange={onChange} style={{width:'50px'}}>
                     <option value={"선택"}>선택</option>
                     <option value={"필수"}>필수</option>
                 </select>
-                <input type="text" name="name" onChange={onChange} 
-                value={name}/>
-                <select name='credit' onChange={onChange}>
+            </td>
+            <td style={{width:'170px'}}>
+                <input type="text" name="name" onChange={onChange} style={{width:'170px'}}
+                value={name} required placeholder='과목명'/>
+            </td>
+            <td style={{width:'50px'}}>
+                <select name='credit' onChange={onChange} style={{width:'50px'}}>
                     <option value={0}>학점</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                 </select>
-            <input type="number" name="attend" onChange={onChange} 
-                value={attend}/>
-            <input type="number" name="task" onChange={onChange} 
-                value={task}/>
-            <input type="number" name="midterm" onChange={onChange} 
-                value={midterm}/>
-            <input type="number" name="final" onChange={onChange} 
-                value={final}/>
-            <button onClick={onCreate}>등록</button>
-        </div>
+            </td>
+            <td style={{width:'70px'}}>
+                <input type="number" min={0} max={40} name="attend" onChange={onChange} style={{width:'70px'}}
+                value={attend} required />
+            </td>
+            <td style={{width:'70px'}}>
+                <input type="number" min={0} max={40} name="task" onChange={onChange} style={{width:'70px'}} 
+                value={task} required />
+            </td>
+            <td style={{width:'70px'}}>
+                <input type="number" min={0} max={40} name="midterm" onChange={onChange} style={{width:'70px'}} 
+                value={midterm} required />
+            </td>
+            <td style={{width:'70px'}}>
+                <input type="number" min={0} max={40} name="final" onChange={onChange} style={{width:'70px'}} 
+                value={final} required />
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
     )
 }
 

@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
 import CreateGrade from './CreateGrade';
+import GradeList from './GradeList';
 
 
-export default function ReportCard(){
+export default function ReportCard(year){
     let total = 0;
     let integrationCredit = 0;
     let integrationAttend = 0;
@@ -10,6 +11,9 @@ export default function ReportCard(){
     let integrationMidterm = 0;
     let integrationFinal = 0;
     let integrationTotal = 0;
+    let avg = 0;
+    const [addForm, visibleAddForm] = useState(false);
+    const [rmBtnVisible, changeRmBtnVisible] = useState(false);
     const nextId = useRef(3);
     const [inputs, setInputs] = useState({
         "course":"",
@@ -23,40 +27,7 @@ export default function ReportCard(){
         "total":0
     });
     const {course,required,name,credit,attend,task,midterm,final} = inputs;
-    const [subjectGrades, setSubjectGrades] = useState([{
-        "id" : 0,
-        "course":"교양",
-        "required":"선택",
-        "name":"교양1",
-        "credit" : 1,
-        "attend":0,
-        "task":0,
-        "midterm":0,
-        "final":0,
-        "total":0
-    },{
-        "id" : 1,
-        "course":"",
-        "required":"",
-        "name":"",
-        "credit" : 2,
-        "attend":1,
-        "task":1,
-        "midterm":1,
-        "final":1,
-        "total":1
-    },{
-        "id" : 2,
-        "course":"",
-        "required":"",
-        "name":"",
-        "credit" : 3,
-        "attend":3,
-        "task":3,
-        "midterm":3,
-        "final":3,
-        "total":3
-    }]);
+    const [subjectGrades, setSubjectGrades] = useState([]);
 
     const onChange = e =>{
         const {name, value} = e.target;
@@ -93,15 +64,11 @@ export default function ReportCard(){
         nextId.current += 1;
     }
 
-    // const [subjects, subjectsFunc] = useState(subjectList);
-    // let total = 0;
-    // let cnt = 0;
+    const onRemove = id => {
+        setSubjectGrades(subjectGrades.filter(subject => subject.id !== id));
+    }
 
-    // function add(){
-
-    // }
-
-    function getGrade(credit,score){
+    const getGrade = (credit,score) => {
         if(credit === 1){
             return "P"
         }else{
@@ -134,17 +101,52 @@ export default function ReportCard(){
             }
         }
     }
-    return <>
-    <CreateGrade name={name} attend={attend} task={task} midterm={midterm} final={final} onChange={onChange} onCreate={onCreate} />
-    {/* <span>
-        <span>1학년</span>
-        <button onClick={add}>추가</button>
-        <button>삭제</button>
-        <button>저장</button>
+
+    subjectGrades.map((subject) =>
+    (
+        // eslint-disable-next-line
+        integrationCredit+= parseInt(subject.credit),
+        integrationAttend+= parseInt(subject.attend),
+        integrationTask+= parseInt(subject.task),
+        integrationMidterm+= parseInt(subject.midterm),
+        integrationFinal+= parseInt(subject.final),
+        total = parseInt(subject.attend) + parseInt(subject.task) + parseInt(subject.midterm) + parseInt(subject.final),
+        integrationTotal+= total,
+        avg = parseInt(integrationTotal/subjectGrades.length)
+    ))
+
+    return <div style={{
+        width:"1000px",
+        margin:'0 auto',
+        marginTop:"50px",
+    }}>
+    <span style={
+        {
+            display:'flex',
+            justifyContent:'space-between',
+            alignItems:'center',
+            width:'935px',
+            height:'40px'
+        }
+    }>
+            <h2>
+            {year.year}학년
+            </h2>
+        <span>
+        <button onClick={() => {visibleAddForm(!addForm)}}>{addForm? "확인": "추가"}</button>
+        <button onClick={() => {changeRmBtnVisible(!rmBtnVisible)}}>{rmBtnVisible? "확인": "삭제"}</button>
+        <button onClick={onCreate}>저장</button>
         </span>
-        */
-    <table border={1}>
-        <thead>
+        </span>
+    <table style={{
+        fontWeight:600,
+        textAlign: 'center',
+        width:'100%',
+    }}>
+        <thead style={{
+            backgroundColor:'#E3C770',
+            color:'white'
+        }}>
             <tr>
             <th>이수</th>
             <th>필수</th>
@@ -157,66 +159,24 @@ export default function ReportCard(){
             <th>총점</th>
             <th>평균</th>
             <th>성적</th>
+            <th style={{width:'60px', backgroundColor:'white'}}></th>
             </tr>
         </thead>
-        <tbody>
-        {subjectGrades.map((subject) =>(
-            integrationCredit+= parseInt(subject.credit),
-            integrationAttend+= parseInt(subject.attend),
-            integrationTask+= parseInt(subject.task),
-            integrationMidterm+= parseInt(subject.midterm),
-            integrationFinal+= parseInt(subject.final),
-            total = parseInt(subject.attend) + parseInt(subject.task) + parseInt(subject.midterm) + parseInt(subject.final),
-            integrationTotal+= total,
-        <tr key={subject.id}>
-            <td>{subject.course}</td>
-            <td>{subject.required}</td>
-            <td>{subject.name}</td>
-            <td>{subject.credit}</td>
-            <td>{subject.attend === 0 ? "" : subject.attend}</td>
-            <td>{subject.task === 0 ? "" : subject.task}</td>
-            <td>{subject.midterm === 0 ? "" : subject.midterm}</td>
-            <td>{subject.final === 0 ? "" : subject.final}</td>
-            <td>{total === 0 ? "" : total}</td>
-            <td></td>
-            <td style={getGrade(subject.credit,total) === "F" ? {color : "red"} : {color : "black"}}>{getGrade(subject.credit, total)}</td>
-        </tr>
-        ))}
+        <tbody style={
+            {
+                backgroundColor:'#F3E0B5',
+            }
+        }>
+        <GradeList grades={subjectGrades} onRemove={onRemove} getGrade={getGrade} rmBtnVisible={rmBtnVisible}></GradeList>
+        {addForm &&
+        <CreateGrade name={name} attend={attend} task={task} midterm={midterm} final={final} onChange={onChange} onCreate={onCreate} />
+        }
         </tbody>
-        {/*
-        <tr className='addForm'>
-            <td>
-                <select name='course'>
-                    <option value={""}>교양/전공</option>
-                    <option value={"교양"}>교양</option>
-                    <option value={"전공"}>전공</option>
-                </select>
-            </td>
-            <td>
-            <select name='required'>
-                    <option value={""}>선택/필수</option>
-                    <option value={"교양"}>교양</option>
-                    <option value={"전공"}>전공</option>
-                </select>
-            </td>
-            <td><input type="text" name="name"/></td>
-            <td>
-                <select name='credit'>
-                    <option value={0}>학점</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                </select></td>
-            <td><input type="number" name="attend"/></td>
-            <td><input type="number" name="task"/></td>
-            <td><input type="number" name="midterm"/></td>
-            <td><input type="number" name="final"/></td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-        </tr>
-        */}
-        <tfoot>
+        <tfoot style={
+            {
+                backgroundColor:'#F3E0B5',
+            }
+        }>
             <tr>
                 <td colSpan={3}>합계</td>
                 <td>{integrationCredit}</td>
@@ -225,10 +185,10 @@ export default function ReportCard(){
                 <td>{integrationMidterm}</td>
                 <td>{integrationFinal}</td>
                 <td>{integrationTotal}</td>
-                <td>{parseInt(integrationTotal/nextId.current)}</td>
-                <td style={getGrade(0,integrationTotal/nextId.current) === "F" ? {color : "red"} : {color : "black"}}>{getGrade(0,integrationTotal/nextId.current)}</td>
+                <td>{avg}</td>
+                <td style={getGrade(0,avg) === "F" ? {color : "red"} : {color : "black"}}>{getGrade(0,avg)}</td>
             </tr>
         </tfoot>
-    </table> }
-    </>
+    </table>
+    </div>
 }
