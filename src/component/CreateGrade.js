@@ -3,14 +3,16 @@ import React from 'react';
 function CreateGrade({name, attend, task,midterm, final,onChange}){
     return (
         <tr>
-            <td style={{width:'50px'}}>
-                <select name='course' onChange={onChange} style={{width:'50px'}}>
+            <td style={{width:'80px'}}>
+                <select name='course' defaultValue={""} onChange={onChange} style={{width:'80px'}}>
+                    <option value={""}>교양/전공</option>
                     <option value={"교양"}>교양</option>
                     <option value={"전공"}>전공</option>
                 </select>
             </td>
-            <td style={{width:'50px'}}>
-                <select name='required' onChange={onChange} style={{width:'50px'}}>
+            <td style={{width:'80px'}}>
+                <select name='required' defaultValue={""} onChange={onChange} style={{width:'80px'}}>
+                    <option value={""}>선택/필수</option>
                     <option value={"선택"}>선택</option>
                     <option value={"필수"}>필수</option>
                 </select>

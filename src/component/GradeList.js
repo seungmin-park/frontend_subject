@@ -2,8 +2,8 @@ function Grade({grade, onRemove,getGrade, rmBtnVisible}){
     const {id,course, required, name, credit, attend, task, midterm, final} = grade;
     let total = parseInt(attend) + parseInt(task) + parseInt(midterm) + parseInt(final);
     return<tr>
-        <td style={{width:'50px'}}>{course}</td>
-        <td style={{width:'50px'}}>{required}</td>
+        <td style={{width:'80px'}}>{course}</td>
+        <td style={{width:'80px'}}>{required}</td>
         <td style={{width:'175px'}}>{name}</td>
         <td style={{width:'50px'}}>{credit}</td>
         <td style={{width:'70px'}}>{attend === 0 ? "" : attend}</td>
@@ -12,7 +12,12 @@ function Grade({grade, onRemove,getGrade, rmBtnVisible}){
         <td style={{width:'70px'}}>{final === 0 ? "" : final}</td>
         <td>{total === 0 ? "" : total}</td>
         <td></td>
-        <td style={getGrade(credit,total) === "F" ? {color : "red"} : {color : "black"}}>{getGrade(credit, total)}</td>
+        <td style={
+            {
+                width : '60px',
+                color : getGrade(credit,total) === "F" ? "red" : "black"
+            }
+            }>{getGrade(credit, total)}</td>
         {
             rmBtnVisible &&
             <td style={{backgroundColor:'white', width:'60px', height:'23px'}}>

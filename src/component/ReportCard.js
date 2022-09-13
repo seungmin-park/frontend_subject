@@ -38,6 +38,7 @@ export default function ReportCard(year){
     }
 
     const onCreate = () =>{
+        const regExp = /[0-9]/g;
         const subjectGrade = {
             id: nextId.current,
             course,
@@ -48,6 +49,14 @@ export default function ReportCard(year){
             task,
             midterm,
             final,
+        }
+        if(course.match("") || required.match("")|| name.match("")|| credit.match(0)){
+            alert("값을 전부 입력하세요");
+            return;
+        }
+        if(!(regExp.test(attend) && regExp.test(task) && regExp.test(midterm) && regExp.test(final))){
+            alert("점수 부분에는 숫자만 입력이 가능합니다.");
+            return;
         }
         setSubjectGrades([...subjectGrades, subjectGrade])
         setInputs({
