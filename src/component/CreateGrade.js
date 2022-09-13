@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function CreateGrade({name, attend, task,midterm, final,onChange}){
+    const [isOnline, changeIsOnline] = useState(false);
+    const testF = e =>{
+        onChange(e);
+        const {name, value} = e.target;
+        if(name === 'credit' && value === '1'){
+            changeIsOnline(true);
+        }else if(name === 'credit' && value !== '1'){
+            changeIsOnline(false)
+        }
+    }
     return (
         <tr>
             <td style={{width:'80px'}}>
@@ -22,7 +32,7 @@ function CreateGrade({name, attend, task,midterm, final,onChange}){
                 value={name} required placeholder='과목명'/>
             </td>
             <td style={{width:'50px'}}>
-                <select name='credit' onChange={onChange} style={{width:'50px'}}>
+                <select name='credit' onChange={testF} style={{width:'50px'}}>
                     <option value={0}>학점</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
@@ -47,7 +57,14 @@ function CreateGrade({name, attend, task,midterm, final,onChange}){
             </td>
             <td></td>
             <td></td>
-            <td></td>
+            <td>{
+                isOnline &&
+                <select name='grade' onChange={onChange} style={{width:'60px'}}>
+                    <option value={""}>P/NP</option>
+                    <option value={"P"}>P</option>
+                    <option value={"NP"}>NP</option>
+                </select>
+                }</td>
         </tr>
     )
 }
