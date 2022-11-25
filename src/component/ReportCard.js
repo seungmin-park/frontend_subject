@@ -14,7 +14,7 @@ export default function ReportCard(year){
     let avg = 0;
     const [addForm, visibleAddForm] = useState(false);
     const [rmBtnVisible, changeRmBtnVisible] = useState(false);
-    const nextId = useRef(3);
+    const nextId = useRef(0);
     const [inputs, setInputs] = useState({
         "course":"",
         "required":"",
@@ -60,10 +60,10 @@ export default function ReportCard(year){
         }
         setSubjectGrades([...subjectGrades, subjectGrade])
         setInputs({
-            "course":"",
-            "required":"",
+            "course":course,
+            "required":required,
             "name":"",
-            "credit" : 0,
+            "credit" : credit,
             "attend":0,
             "task":0,
             "midterm":0,
