@@ -1,23 +1,24 @@
 function Grade({grade, onRemove,getGrade, rmBtnVisible}){
     const {id,course, required, name, credit, attend, task, midterm, final} = grade;
     let total = parseInt(attend) + parseInt(task) + parseInt(midterm) + parseInt(final);
+    let totalGrade = attend < 8 ? "F" : getGrade(credit, total);
     return<tr>
         <td style={{width:'80px'}}>{course}</td>
         <td style={{width:'80px'}}>{required}</td>
         <td style={{width:'175px'}}>{name}</td>
         <td style={{width:'50px'}}>{credit}</td>
-        <td style={{width:'70px'}}>{attend === 0 ? "" : attend}</td>
-        <td style={{width:'70px'}}>{task === 0 ? "" : task}</td>
-        <td style={{width:'70px'}}>{midterm === 0 ? "" : midterm}</td>
-        <td style={{width:'70px'}}>{final === 0 ? "" : final}</td>
-        <td>{total === 0 ? "" : total}</td>
+        <td style={{width:'70px'}}>{attend}</td>
+        <td style={{width:'70px'}}>{task}</td>
+        <td style={{width:'70px'}}>{midterm}</td>
+        <td style={{width:'70px'}}>{final}</td>
+        <td>{total}</td>
         <td></td>
         <td style={
             {
                 width : '60px',
-                color : getGrade(credit,total) === "F" ? "red" : "black"
+                color : totalGrade === "F" ? "red" : "black"
             }
-            }>{getGrade(credit, total)}</td>
+            }>{totalGrade}</td>
         {
             rmBtnVisible &&
             <td style={{backgroundColor:'white', width:'60px', height:'23px'}}>
