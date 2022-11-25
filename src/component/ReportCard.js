@@ -123,7 +123,8 @@ export default function ReportCard(year){
         }
     }
 
-    subjectGrades.map((subject) =>
+    let removeZeroAttend = subjectGrades.filter((subject) => parseInt(subject.attend) > 8);
+    removeZeroAttend.forEach((subject) =>
     (
         // eslint-disable-next-line
         integrationCredit+= parseInt(subject.credit),
@@ -133,7 +134,7 @@ export default function ReportCard(year){
         integrationFinal+= parseInt(subject.final),
         total = parseInt(subject.attend) + parseInt(subject.task) + parseInt(subject.midterm) + parseInt(subject.final),
         integrationTotal+= total,
-        avg = parseInt(integrationTotal/subjectGrades.length)
+        avg = parseInt(integrationTotal/removeZeroAttend.length)
     ))
 
     return <div style={{
