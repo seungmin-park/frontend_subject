@@ -58,6 +58,22 @@ export default function ReportCard(year){
             alert("점수 부분에는 숫자만 입력이 가능합니다.");
             return;
         }
+        if(attend > 25){
+            alert("출석점수의 최대 비중은 25 입니다.");
+            return;
+        }
+        if(task > 15){
+            alert("과제점수의 최대 비중은 15 입니다.");
+            return;
+        }
+        if(midterm > 30 || final > 30){
+            alert("각 시험의 최대 비중은 30 입니다.");
+            return;
+        }
+        if(attend + task + midterm + final > 100){
+            alert("모든 점수의 합은 최대 100 입니다.");
+            return;
+        }
         setSubjectGrades([...subjectGrades, subjectGrade])
         setInputs({
             "course":course,
