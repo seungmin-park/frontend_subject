@@ -21,7 +21,7 @@ function Grade({grade, onRemove,getGrade, rmBtnVisible}){
         <td style={
             {
                 width : '60px',
-                color : totalGrade === "F" ? "red" : "black"
+                color : totalGrade === "F" || totalGrade === "NP" ? "red" : "black"
             }
             }>{totalGrade}</td>
         {
