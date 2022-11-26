@@ -24,9 +24,10 @@ export default function ReportCard(year){
         "task":0,
         "midterm":0,
         "final":0,
-        "total":0
+        "total":0,
+        "onlineGrade":""
     });
-    const {course,required,name,credit,attend,task,midterm,final} = inputs;
+    const {course,required,name,credit,attend,task,midterm,final, onlineGrade} = inputs;
     const [subjectGrades, setSubjectGrades] = useState([]);
 
     const onChange = e =>{
@@ -49,6 +50,7 @@ export default function ReportCard(year){
             task,
             midterm,
             final,
+            onlineGrade
         }
         if(course === '' || required=== ''|| name=== ''|| credit=== ''){
             alert("값을 전부 입력하세요");
@@ -80,7 +82,8 @@ export default function ReportCard(year){
             "task":0,
             "midterm":0,
             "final":0,
-            "total":0
+            "total":0,
+            "onlineGrade":onlineGrade
         })
         nextId.current += 1;
     }
@@ -89,10 +92,7 @@ export default function ReportCard(year){
         setSubjectGrades(subjectGrades.filter(subject => subject.id !== id));
     }
 
-    const getGrade = (credit,score) => {
-        if(credit === 1){
-            return "P"
-        }else{
+    const getGrade = (score) => {
             if(score >= 95){
                 return "A+";
             }
@@ -120,7 +120,6 @@ export default function ReportCard(year){
             else{
                 return "F";
             }
-        }
     }
 
     let removeZeroAttend = subjectGrades.filter((subject) => parseInt(subject.attend) > 8);
@@ -208,7 +207,7 @@ export default function ReportCard(year){
                 <td>{integrationFinal}</td>
                 <td>{integrationTotal}</td>
                 <td>{avg}</td>
-                <td style={getGrade(0,avg) === "F" ? {color : "red"} : {color : "black"}}>{getGrade(0,avg)}</td>
+                <td style={getGrade(avg) === "F" ? {color : "red"} : {color : "black"}}>{getGrade(avg)}</td>
             </tr>
         </tfoot>
     </table>

@@ -1,7 +1,12 @@
 function Grade({grade, onRemove,getGrade, rmBtnVisible}){
-    const {id,course, required, name, credit, attend, task, midterm, final} = grade;
+    const {id,course, required, name, credit, attend, task, midterm, final, onlineGrade} = grade;
     let total = parseInt(attend) + parseInt(task) + parseInt(midterm) + parseInt(final);
-    let totalGrade = attend < 8 ? "F" : getGrade(credit, total);
+    let totalGrade = "F";
+    if(credit === '1'){
+        totalGrade = onlineGrade;
+    }else if(attend > 7){
+        totalGrade = getGrade(total);
+    }
     return<tr>
         <td style={{width:'80px'}}>{course}</td>
         <td style={{width:'80px'}}>{required}</td>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-function CreateGrade({name, attend, task,midterm, final,onChange}){
+function CreateGrade({name, attend, task,midterm, final, onChange}){
     const [isOnline, changeIsOnline] = useState(false);
     const testF = e =>{
         onChange(e);
@@ -41,25 +40,25 @@ function CreateGrade({name, attend, task,midterm, final,onChange}){
             </td>
             <td style={{width:'70px'}}>
                 <input type="number" min={0} max={40} name="attend" onChange={onChange} style={{width:'70px'}}
-                value={attend} required />
+                value={attend} required disabled={isOnline}/>
             </td>
             <td style={{width:'70px'}}>
                 <input type="number" min={0} max={40} name="task" onChange={onChange} style={{width:'70px'}} 
-                value={task} required />
+                value={task} required disabled={isOnline}/>
             </td>
             <td style={{width:'70px'}}>
                 <input type="number" min={0} max={40} name="midterm" onChange={onChange} style={{width:'70px'}} 
-                value={midterm} required />
+                value={midterm} required disabled={isOnline}/>
             </td>
             <td style={{width:'70px'}}>
                 <input type="number" min={0} max={40} name="final" onChange={onChange} style={{width:'70px'}} 
-                value={final} required />
+                value={final} required disabled={isOnline}/>
             </td>
             <td></td>
             <td></td>
             <td>{
                 isOnline &&
-                <select name='grade' onChange={onChange} style={{width:'60px'}}>
+                <select name='onlineGrade' onChange={onChange} style={{width:'60px'}}>
                     <option value={""}>P/NP</option>
                     <option value={"P"}>P</option>
                     <option value={"NP"}>NP</option>
