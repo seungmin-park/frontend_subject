@@ -57,7 +57,7 @@ export default function ReportCard(year){
             return;
         }
         if(!(regExp.test(attend) && regExp.test(task) && regExp.test(midterm) && regExp.test(final))){
-            alert("점수 부분에는 숫자만 입력이 가능합니다.");
+            alert("점수 부분에는 양의 정수만 입력이 가능합니다.");
             return;
         }
         if(attend > 25){
