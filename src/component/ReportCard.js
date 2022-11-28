@@ -122,7 +122,7 @@ export default function ReportCard(year){
             }
     }
 
-    let removeZeroAttend = subjectGrades.filter((subject) => parseInt(subject.attend) > 8);
+    let removeZeroAttend = subjectGrades.filter((subject) => parseInt(subject.attend) > 8 && parseInt(subject.attend) + parseInt(subject.task) + parseInt(subject.midterm) + parseInt(subject.final) >= 60);
     let passOnlineCnt = subjectGrades.filter((subject) => subject.onlineGrade === 'P').length;
     integrationCredit += passOnlineCnt;
     removeZeroAttend.forEach((subject) =>
