@@ -19,7 +19,7 @@ export default function ReportCard(year){
         "course":"",
         "required":"",
         "name":"",
-        "credit" : 0,
+        "credit" : "",
         "attend":0,
         "task":0,
         "midterm":0,
@@ -70,6 +70,10 @@ export default function ReportCard(year){
         }
         if(midterm > 30 || final > 30){
             alert("각 시험의 최대 비중은 30 입니다.");
+            return;
+        }
+        if(credit === '1' && onlineGrade === ''){
+            alert("성적을 선택하세요.");
             return;
         }
         setSubjectGrades([...subjectGrades, subjectGrade])

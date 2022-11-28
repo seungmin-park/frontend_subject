@@ -32,10 +32,10 @@ function CreateGrade({name, attend, task,midterm, final, onChange}){
             </td>
             <td style={{width:'50px'}}>
                 <select name='credit' onChange={testF} style={{width:'50px'}}>
-                    <option value={0}>학점</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
+                    <option value={""}>학점</option>
+                    <option value={"1"}>1</option>
+                    <option value={"2"}>2</option>
+                    <option value={"3"}>3</option>
                 </select>
             </td>
             <td style={{width:'70px'}}>
